@@ -79,7 +79,7 @@ export default function LaborPanel() {
                 title="Unemployment Rate"
                 color="#ef4444"
                 unit="%"
-                description="Percentage of the labor force that is jobless and actively seeking employment. A lower unemployment rate indicates a healthier job market."
+                description="X-axis: Year | Y-axis: Percentage (%). This shows the percentage of the labor force that is jobless and actively seeking employment. A lower unemployment rate indicates a healthier job market."
                 source="FRED API (Federal Reserve Economic Data)"
               />
             )}
@@ -96,7 +96,7 @@ export default function LaborPanel() {
                 title="Non-Farm Payrolls"
                 color="#3b82f6"
                 unit="Thousands"
-                description="Total number of paid workers in the U.S. economy, excluding farm workers, private household employees, and non-profit organization employees. Rising payrolls indicate job market growth."
+                description="X-axis: Year | Y-axis: Number of workers in thousands. This shows the total number of paid workers in the U.S. economy, excluding farm workers, private household employees, and non-profit organization employees. Rising payrolls indicate job market growth."
                 source="FRED API (Federal Reserve Economic Data)"
               />
             )}
@@ -114,7 +114,7 @@ export default function LaborPanel() {
               title="Labor Force Participation Rate"
               color="#10b981"
               unit="%"
-              description="Percentage of the working-age population that is either employed or actively looking for work. A declining rate may indicate discouraged workers leaving the labor force."
+              description="X-axis: Year | Y-axis: Percentage (%). This shows the percentage of the working-age population that is either employed or actively looking for work. A declining rate may indicate discouraged workers leaving the labor force."
               source="FRED API (Federal Reserve Economic Data)"
             />
           )}

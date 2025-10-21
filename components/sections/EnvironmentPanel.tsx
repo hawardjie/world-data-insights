@@ -135,7 +135,7 @@ export default function EnvironmentPanel() {
                 title="Global Energy Use Per Capita"
                 color="#f59e0b"
                 unit="kg of oil equivalent"
-                description="Measures global energy consumption per person, showing trends in energy demand and efficiency improvements over time."
+                description="X-axis: Year | Y-axis: Energy consumption in kg of oil equivalent per capita. This measures global energy consumption per person, showing trends in energy demand and efficiency improvements over time."
                 source="World Bank Open Data API"
               />
             )}
@@ -152,7 +152,7 @@ export default function EnvironmentPanel() {
                 title="Renewable Energy Consumption"
                 color="#22c55e"
                 unit="% of total energy"
-                description="Shows the share of total energy that comes from renewable sources like solar, wind, and hydro, reflecting the global transition away from fossil fuels."
+                description="X-axis: Year | Y-axis: Percentage of total energy consumption (%). This shows the share of total energy that comes from renewable sources like solar, wind, and hydro, reflecting the global transition away from fossil fuels."
                 source="World Bank Open Data API"
               />
             )}
@@ -170,7 +170,7 @@ export default function EnvironmentPanel() {
               title="Global Forest Coverage"
               color="#16a34a"
               unit="% of land area"
-              description="Tracks the percentage of Earth's land area covered by forests, highlighting deforestation trends and conservation efforts critical for biodiversity and carbon sequestration."
+              description="X-axis: Year | Y-axis: Percentage of land area (%). This tracks the percentage of Earth's land area covered by forests, highlighting deforestation trends and conservation efforts critical for biodiversity and carbon sequestration."
               source="World Bank Open Data API"
             />
           )}

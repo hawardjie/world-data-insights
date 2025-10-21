@@ -104,7 +104,7 @@ export default function GDPPanel() {
                   { id: 'GDP', name: 'Nominal GDP', color: '#3b82f6' },
                   { id: 'GDPC1', name: 'Real GDP', color: '#10b981' },
                 ]}
-                description="Nominal GDP measures economic output in current prices, while Real GDP adjusts for inflation to show true economic growth. The gap between them indicates the impact of inflation on the economy."
+                description="X-axis: Year | Y-axis: GDP in billions of dollars. Nominal GDP (blue) measures economic output in current prices, while Real GDP (green) adjusts for inflation to show true economic growth. The gap between them indicates the impact of inflation on the economy."
                 source="FRED API (Federal Reserve Economic Data)"
               />
             )}
@@ -121,7 +121,7 @@ export default function GDPPanel() {
                 title="US Inflation Rate (YoY % Change)"
                 color="#f59e0b"
                 unit="%"
-                description="Year-over-year percentage change in the Consumer Price Index (CPI). Higher values indicate rising prices and inflation, while lower or negative values suggest deflation or stable prices."
+                description="X-axis: Year | Y-axis: Percentage change (%). This shows year-over-year percentage change in the Consumer Price Index (CPI). Higher values indicate rising prices and inflation, while lower or negative values suggest deflation or stable prices."
                 source="FRED API (Federal Reserve Economic Data)"
               />
             )}
