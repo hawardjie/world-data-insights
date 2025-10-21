@@ -316,7 +316,7 @@ function generateLabourForceData(startYear: number, endYear: number): DataRow[] 
 function generateUnemploymentData(startYear: number, endYear: number): DataRow[] {
   const data: DataRow[] = [];
   COUNTRIES.forEach(country => {
-    let baseRate = Math.random() * 8 + 3; // 3-11%
+    const baseRate = Math.random() * 8 + 3; // 3-11%
     for (let year = startYear; year <= endYear; year++) {
       // COVID spike in 2020
       const covidImpact = year === 2020 ? 4 : year === 2021 ? 2 : 0;

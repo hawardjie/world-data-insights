@@ -21,6 +21,7 @@ interface BarChartProps {
   unit?: string;
   height?: number;
   source?: string;
+  description?: string;
 }
 
 export default function BarChart({
@@ -30,6 +31,7 @@ export default function BarChart({
   unit = '',
   height = 400,
   source,
+  description,
 }: BarChartProps) {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -47,9 +49,14 @@ export default function BarChart({
 
   return (
     <div className="w-full">
-      <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
+      <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
         {title}
       </h3>
+      {description && (
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          {description}
+        </p>
+      )}
       <ResponsiveContainer width="100%" height={height}>
         <RechartsBarChart
           data={data}

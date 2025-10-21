@@ -91,7 +91,7 @@ export default function InteractiveDataExplorer() {
             throw new Error('No data available in CSV file');
           }
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error('CSV parsing error:', error);
           throw new Error(`Failed to parse CSV: ${error.message}`);
         },
