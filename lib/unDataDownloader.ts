@@ -375,12 +375,12 @@ export const UN_DATASETS: UNDataset[] = [
     lastUpdated: '2025-01-15',
   },
   {
-    id: 'wb-co2-emissions',
-    name: 'CO2 emissions (metric tons per capita)',
+    id: 'wb-energy-use',
+    name: 'Energy use (kg of oil equivalent per capita)',
     category: 'Environment',
-    description: 'Carbon dioxide emissions per capita with recent estimates',
+    description: 'Energy consumption per capita with recent data',
     source: 'WorldBank',
-    worldBankIndicator: 'EN.ATM.CO2E.PC',
+    worldBankIndicator: 'EG.USE.PCAP.KG.OE',
     lastUpdated: '2025-01-15',
   },
   {
@@ -399,15 +399,6 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Sum of exports and imports as % of GDP',
     source: 'WorldBank',
     worldBankIndicator: 'NE.TRD.GNFS.ZS',
-    lastUpdated: '2025-01-15',
-  },
-  {
-    id: 'wb-energy-use',
-    name: 'Energy use (kg of oil equivalent per capita)',
-    category: 'Energy',
-    description: 'Energy consumption per capita',
-    source: 'WorldBank',
-    worldBankIndicator: 'EG.USE.PCAP.KG.OE',
     lastUpdated: '2025-01-15',
   },
 ];

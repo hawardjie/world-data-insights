@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { getWorldBankApi } from '@/lib/worldBankApi';
 import { WB_INDICATORS } from '@/types/worldbank';
 import { mockCO2EmissionsData, mockRenewableEnergyData, mockForestAreaData } from '@/lib/mockEnvironmentData';
 import { transformWBToChartData } from '@/utils/worldBankTransform';
@@ -14,7 +13,7 @@ import ErrorMessage from '@/components/ui/ErrorMessage';
 export default function EnvironmentPanel() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [co2Data, setCo2Data] = useState<any[]>([]);
+  const [energyData, setEnergyData] = useState<any[]>([]);
   const [renewableData, setRenewableData] = useState<any[]>([]);
   const [forestData, setForestData] = useState<any[]>([]);
   const [usingMockData, setUsingMockData] = useState(false);
@@ -25,28 +24,51 @@ export default function EnvironmentPanel() {
     setUsingMockData(false);
 
     try {
-      const wbApi = getWorldBankApi();
-
-      console.log('🌍 Loading CO2 Emissions data...');
-      const co2 = await wbApi.getIndicatorData(WB_INDICATORS.CO2_EMISSIONS, {
-        country: 'WLD',
-        date: '2010:2023',
-      });
-      setCo2Data(transformWBToChartData(co2));
+      console.log('🌍 Loading Energy Use Per Capita data...');
+      const energyResponse = await fetch(
+        `/api/worldbank/indicator?indicator=${WB_INDICATORS.ENERGY_USE_PER_CAPITA}&country=WLD&date=2010:2023&per_page=1000`
+      );
+      const energyResult = await energyResponse.json();
 
       console.log('🌍 Loading Renewable Energy data...');
-      const renewable = await wbApi.getIndicatorData(WB_INDICATORS.RENEWABLE_ENERGY, {
-        country: 'WLD',
-        date: '2010:2023',
-      });
-      setRenewableData(transformWBToChartData(renewable));
+      const renewableResponse = await fetch(
+        `/api/worldbank/indicator?indicator=${WB_INDICATORS.RENEWABLE_ENERGY}&country=WLD&date=2010:2023&per_page=1000`
+      );
+      const renewableResult = await renewableResponse.json();
 
       console.log('🌍 Loading Forest Area data...');
-      const forest = await wbApi.getIndicatorData(WB_INDICATORS.FOREST_AREA, {
-        country: 'WLD',
-        date: '2010:2023',
-      });
-      setForestData(transformWBToChartData(forest));
+      const forestResponse = await fetch(
+        `/api/worldbank/indicator?indicator=${WB_INDICATORS.FOREST_AREA}&country=WLD&date=2010:2023&per_page=1000`
+      );
+      const forestResult = await forestResponse.json();
+
+      // Check if we got valid data
+      if (energyResult.data && energyResult.data.length > 0) {
+        setEnergyData(transformWBToChartData(energyResult));
+        console.log(`✅ Loaded ${energyResult.data.length} energy use data points`);
+      } else {
+        console.warn('⚠️ No energy use data available, using mock data');
+        setEnergyData(transformWBToChartData(mockCO2EmissionsData));
+        setUsingMockData(true);
+      }
+
+      if (renewableResult.data && renewableResult.data.length > 0) {
+        setRenewableData(transformWBToChartData(renewableResult));
+        console.log(`✅ Loaded ${renewableResult.data.length} renewable energy data points`);
+      } else {
+        console.warn('⚠️ No renewable energy data available, using mock data');
+        setRenewableData(transformWBToChartData(mockRenewableEnergyData));
+        setUsingMockData(true);
+      }
+
+      if (forestResult.data && forestResult.data.length > 0) {
+        setForestData(transformWBToChartData(forestResult));
+        console.log(`✅ Loaded ${forestResult.data.length} forest data points`);
+      } else {
+        console.warn('⚠️ No forest data available, using mock data');
+        setForestData(transformWBToChartData(mockForestAreaData));
+        setUsingMockData(true);
+      }
 
       console.log('✅ Environment data loaded successfully');
       setLoading(false);
@@ -55,7 +77,7 @@ export default function EnvironmentPanel() {
 
       // Fallback to mock data
       try {
-        setCo2Data(transformWBToChartData(mockCO2EmissionsData));
+        setEnergyData(transformWBToChartData(mockCO2EmissionsData));
         setRenewableData(transformWBToChartData(mockRenewableEnergyData));
         setForestData(transformWBToChartData(mockForestAreaData));
 
@@ -85,7 +107,7 @@ export default function EnvironmentPanel() {
           Environment & Climate Indicators
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
-          Global environmental trends including CO2 emissions, renewable energy adoption, and forest conservation
+          Global environmental trends including energy consumption, renewable energy adoption, and forest conservation
         </p>
         {usingMockData && (
           <div className="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-300 dark:border-amber-700 rounded-lg flex items-start gap-2">
@@ -109,11 +131,11 @@ export default function EnvironmentPanel() {
               <ChartSkeleton />
             ) : (
               <TimeSeriesLineChart
-                data={co2Data}
-                title="Global CO2 Emissions Per Capita"
-                color="#ef4444"
-                unit="Metric tons"
-                description="Measures the average carbon dioxide emissions per person globally, indicating the environmental impact of human activities and progress toward climate goals."
+                data={energyData}
+                title="Global Energy Use Per Capita"
+                color="#f59e0b"
+                unit="kg of oil equivalent"
+                description="Measures global energy consumption per person, showing trends in energy demand and efficiency improvements over time."
                 source="World Bank Open Data API"
               />
             )}
@@ -156,11 +178,11 @@ export default function EnvironmentPanel() {
       </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
+        <Card className="bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800">
           <CardHeader>
-            <CardTitle className="text-lg">Carbon Emissions</CardTitle>
+            <CardTitle className="text-lg">Energy Consumption</CardTitle>
             <CardDescription>
-              Per capita CO2 emissions showing climate impact
+              Per capita energy use showing global demand trends
             </CardDescription>
           </CardHeader>
         </Card>
