@@ -3,13 +3,15 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Papa from 'papaparse';
 import MultiSeriesLineChart from '@/components/charts/MultiSeriesLineChart';
+import MultiSeriesAreaChart from '@/components/charts/MultiSeriesAreaChart';
+import MultiSeriesBarChart from '@/components/charts/MultiSeriesBarChart';
 import CategoryBarChart from '@/components/charts/CategoryBarChart';
 import DataFilters, { FilterOption } from '@/components/ui/DataFilters';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { ChartSkeleton } from '@/components/ui/LoadingSpinner';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import { UN_DATASETS, getAllCategories } from '@/lib/unDataDownloader';
-import { Download, Filter, TrendingUp, BarChart3 } from 'lucide-react';
+import { Download, Filter, TrendingUp, BarChart3, AreaChart, BarChart2 } from 'lucide-react';
 
 interface ParsedDataPoint {
   country: string;
@@ -36,7 +38,7 @@ export default function InteractiveDataExplorer() {
   const [endYear, setEndYear] = useState(2025);
 
   // Chart type
-  const [chartType, setChartType] = useState<'line' | 'bar'>('line');
+  const [chartType, setChartType] = useState<'line' | 'bar' | 'area' | 'multibar'>('line');
 
   // Get datasets for current category
   const datasetsInCategory = useMemo(() => {
@@ -194,6 +196,9 @@ export default function InteractiveDataExplorer() {
     loadData();
   }, [selectedDataset]);
 
+  // Track actual year for bar chart
+  const [actualBarChartYear, setActualBarChartYear] = useState<number | null>(null);
+
   // Prepare chart data based on filters
   const chartData = useMemo(() => {
     if (!rawData || rawData.length === 0) return [];
@@ -209,8 +214,8 @@ export default function InteractiveDataExplorer() {
       return true;
     });
 
-    if (chartType === 'line') {
-      // Group by year for line chart
+    if (chartType === 'line' || chartType === 'area' || chartType === 'multibar') {
+      // Group by year for line, area, and multi-bar charts
       const yearMap = new Map<number, any>();
 
       filtered.forEach((row) => {
@@ -230,16 +235,38 @@ export default function InteractiveDataExplorer() {
         parseInt(a.date) - parseInt(b.date)
       );
     } else {
-      // Aggregate for bar chart (latest year)
-      const latestYear = Math.max(...availableYears.filter(y => y >= startYear && y <= endYear));
+      // Aggregate for single bar chart (latest year with actual data)
+      if (filtered.length === 0) {
+        setActualBarChartYear(null);
+        return [];
+      }
+
+      // Find the latest year that actually has data in the filtered set
+      const yearsWithData = filtered
+        .map((row) => parseInt(row.Year || row.year))
+        .filter((year) => !isNaN(year));
+
+      if (yearsWithData.length === 0) {
+        console.log('No valid years in filtered data');
+        setActualBarChartYear(null);
+        return [];
+      }
+
+      const latestYear = Math.max(...yearsWithData);
+      console.log('Bar chart - Latest year with data:', latestYear);
+      setActualBarChartYear(latestYear);
+
       const latestData = filtered.filter(
         (row) => parseInt(row.Year || row.year) === latestYear
       );
 
-      return latestData.map((row) => ({
-        category: row.Country || row.country || row.Region,
-        value: parseFloat(row.Value || row.value || '0'),
-      }));
+      const chartData = latestData
+        .map((row) => ({
+          category: row.Country || row.country || row.Region,
+          value: parseFloat(row.Value || row.value || '0'),
+        }))
+        .filter((item) => !isNaN(item.value) && item.value !== null);
+      return chartData;
     }
   }, [rawData, selectedCountries, startYear, endYear, chartType, availableYears]);
 
@@ -373,7 +400,7 @@ export default function InteractiveDataExplorer() {
                 {selectedCountries.length} countries, {endYear - startYear + 1} years
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <button
                 onClick={() => setChartType('line')}
                 className={`px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors ${
@@ -395,6 +422,28 @@ export default function InteractiveDataExplorer() {
               >
                 <BarChart3 className="h-4 w-4" />
                 Bar Chart
+              </button>
+              <button
+                onClick={() => setChartType('area')}
+                className={`px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors ${
+                  chartType === 'area'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                }`}
+              >
+                <AreaChart className="h-4 w-4" />
+                Area Chart
+              </button>
+              <button
+                onClick={() => setChartType('multibar')}
+                className={`px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors ${
+                  chartType === 'multibar'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                }`}
+              >
+                <BarChart2 className="h-4 w-4" />
+                Multi-series Bar
               </button>
             </div>
           </div>
@@ -422,11 +471,35 @@ export default function InteractiveDataExplorer() {
                       : 'United Nations Statistical Yearbook (data.un.org)'
                   }
                 />
+              ) : chartType === 'area' ? (
+                <MultiSeriesAreaChart
+                  data={chartData}
+                  title={currentDataset?.name || 'Data Visualization'}
+                  series={countrySeries}
+                  description={`Showing ${selectedCountries.length} countries from ${startYear} to ${endYear}`}
+                  source={
+                    currentDataset?.source === 'WorldBank'
+                      ? 'World Bank Open Data (data.worldbank.org)'
+                      : 'United Nations Statistical Yearbook (data.un.org)'
+                  }
+                />
+              ) : chartType === 'multibar' ? (
+                <MultiSeriesBarChart
+                  data={chartData}
+                  title={currentDataset?.name || 'Data Visualization'}
+                  series={countrySeries}
+                  description={`Showing ${selectedCountries.length} countries from ${startYear} to ${endYear}`}
+                  source={
+                    currentDataset?.source === 'WorldBank'
+                      ? 'World Bank Open Data (data.worldbank.org)'
+                      : 'United Nations Statistical Yearbook (data.un.org)'
+                  }
+                />
               ) : (
                 <CategoryBarChart
                   data={chartData}
-                  title={`${currentDataset?.name || 'Data'} (${endYear})`}
-                  description={`Latest year data for ${selectedCountries.length} countries`}
+                  title={`${currentDataset?.name || 'Data'} (${actualBarChartYear || endYear})`}
+                  description={`${actualBarChartYear ? `Data for ${actualBarChartYear}` : 'Latest year data'} for ${selectedCountries.length} countries`}
                   colors={countrySeries.map((s) => s.color)}
                   source={
                     currentDataset?.source === 'WorldBank'
@@ -474,7 +547,7 @@ export default function InteractiveDataExplorer() {
         <p className="text-xs text-gray-600 dark:text-gray-400">
           <strong>Data Sources:</strong> Live data fetched from United Nations Statistical Yearbook (data.un.org) and World Bank Open Data (data.worldbank.org).
           World Bank datasets include 2024-2025 data. Use the filters above to explore different countries,
-          time periods, and metrics. Switch between line charts (trends over time) and bar charts (latest year comparison).
+          time periods, and metrics. Switch between line charts, area charts, multi-series bar charts (trends over time), and bar charts (latest year comparison).
         </p>
       </div>
     </div>

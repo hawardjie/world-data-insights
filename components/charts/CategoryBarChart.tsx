@@ -85,30 +85,37 @@ export default function CategoryBarChart({
           </p>
         )}
       </div>
-      <ResponsiveContainer width="100%" height={height}>
-        <RechartsBarChart
-          data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-          <XAxis
-            dataKey="category"
-            tick={{ fontSize: 12 }}
-            label={{ value: categoryLabel, position: 'insideBottom', offset: -5 }}
-          />
-          <YAxis
-            tickFormatter={(value) => formatNumber(value)}
-            tick={{ fontSize: 12 }}
-            label={{ value: `${valueLabel} (${unit})`, angle: -90, position: 'insideLeft' }}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Bar dataKey="value" name={valueLabel}>
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={barColors[index % barColors.length]} />
-            ))}
-          </Bar>
-        </RechartsBarChart>
-      </ResponsiveContainer>
+      {data && data.length > 0 ? (
+        <ResponsiveContainer width="100%" height={height}>
+          <RechartsBarChart
+            data={data}
+            margin={{ top: 5, right: 30, left: 20, bottom: 100 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+            <XAxis
+              dataKey="category"
+              angle={-45}
+              textAnchor="end"
+              height={80}
+              interval={0}
+            />
+            <YAxis
+              tickFormatter={(value) => formatNumber(value)}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <Bar dataKey="value" name={valueLabel} fill={color}>
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={barColors[index % barColors.length]} />
+              ))}
+            </Bar>
+          </RechartsBarChart>
+        </ResponsiveContainer>
+      ) : (
+        <div className="flex items-center justify-center h-64 text-gray-500 dark:text-gray-400">
+          No data available for bar chart
+        </div>
+      )}
       {source && (
         <div className="text-right mt-2">
           <p className="text-xs text-gray-500 dark:text-gray-400">

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUNDataCsvApi } from '@/lib/unDataCsvApi';
 import MultiSeriesLineChart from '@/components/charts/MultiSeriesLineChart';
+import MultiSeriesBarChart from '@/components/charts/MultiSeriesBarChart';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { ChartSkeleton } from '@/components/ui/LoadingSpinner';
 import ErrorMessage from '@/components/ui/ErrorMessage';
@@ -111,7 +112,7 @@ export default function HealthEnergyPanel() {
           {loading ? (
             <ChartSkeleton />
           ) : (
-            <MultiSeriesLineChart
+            <MultiSeriesBarChart
               data={healthData}
               title="Health Expenditure as % of GDP"
               series={healthSeries}
@@ -154,7 +155,7 @@ export default function HealthEnergyPanel() {
           {loading ? (
             <ChartSkeleton />
           ) : (
-            <MultiSeriesLineChart
+            <MultiSeriesBarChart
               data={energyData}
               title="Renewable Energy Consumption (% of Total)"
               series={energySeries}

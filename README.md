@@ -1,6 +1,6 @@
 # World Data Insights
 
-A comprehensive web application for visualizing global economic data from FRED (Federal Reserve Economic Data), featuring 800,000+ economic time series from over 100 regional, national, and international sources.
+A comprehensive web application for visualizing global economic data from FRED (Federal Reserve Economic Data), World Bank, United Nations, International Monetary Fund, Central Banks & National Agencies, OECD & Eurostat, featuring 800,000+ economic time series from over 100 regional, national, and international sources.
 
 ## Features
 
@@ -23,7 +23,6 @@ A comprehensive web application for visualizing global economic data from FRED (
 ### Advanced Features
 
 - **Search Functionality**: Search and explore 800,000+ economic series
-- **Data Export**: Export data to CSV and JSON formats
 - **Responsive Design**: Fully responsive UI that works on desktop, tablet, and mobile
 - **Dark Mode Support**: Automatic dark/light theme support
 - **Error Handling**: Comprehensive error handling with retry capabilities
