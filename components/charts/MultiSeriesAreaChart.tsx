@@ -39,9 +39,12 @@ export default function MultiSeriesAreaChart({
 }: MultiSeriesAreaChartProps) {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
+      // Check if label is a year (4-digit string)
+      const displayLabel = /^\d{4}$/.test(label) ? label : formatDate(label, 'MMM dd, yyyy');
+
       return (
         <div className="bg-white dark:bg-gray-800 p-3 border border-gray-300 dark:border-gray-600 rounded shadow-lg">
-          <p className="text-sm font-semibold mb-2">{formatDate(label, 'MMM dd, yyyy')}</p>
+          <p className="text-sm font-semibold mb-2">{displayLabel}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
               {entry.name}: {formatNumber(entry.value)} {entry.unit || ''}
@@ -77,7 +80,14 @@ export default function MultiSeriesAreaChart({
           <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
           <XAxis
             dataKey="date"
-            tickFormatter={(date) => formatDate(date, 'MMM yy')}
+            tickFormatter={(date) => {
+              // If date is a 4-digit year string, display it as-is
+              if (/^\d{4}$/.test(date)) {
+                return date;
+              }
+              // Otherwise use standard date formatting
+              return formatDate(date, 'MMM yy');
+            }}
             tick={{ fontSize: 12 }}
             {...(xAxisLabel && { label: { value: xAxisLabel, position: 'insideBottom', offset: -15, style: { fontSize: 12, fill: '#6B7280' } } })}
           />

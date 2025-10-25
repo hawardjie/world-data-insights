@@ -218,17 +218,21 @@ export default function InteractiveDataExplorer() {
       // Group by year for line, area, and multi-bar charts
       const yearMap = new Map<number, any>();
 
+      // Initialize all years in the selected range
+      for (let year = startYear; year <= endYear; year++) {
+        yearMap.set(year, { date: year.toString() });
+      }
+
+      // Fill in data for available years
       filtered.forEach((row) => {
         const year = parseInt(row.Year || row.year);
         const country = row.Country || row.country || row.Region;
         const value = parseFloat(row.Value || row.value || '0');
 
-        if (!yearMap.has(year)) {
-          yearMap.set(year, { date: year.toString() });
+        if (yearMap.has(year)) {
+          const yearData = yearMap.get(year);
+          yearData[country] = value;
         }
-
-        const yearData = yearMap.get(year);
-        yearData[country] = value;
       });
 
       return Array.from(yearMap.values()).sort((a, b) =>
