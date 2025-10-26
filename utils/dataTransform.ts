@@ -97,19 +97,24 @@ export function getDateRangeForQuery(range: DateRange): {
  * Format large numbers for display
  */
 export function formatNumber(value: number, decimals: number = 2): string {
+  // Helper function to remove trailing zeros
+  const removeTrailingZeros = (numStr: string): string => {
+    return parseFloat(numStr).toString();
+  };
+
   if (Math.abs(value) >= 1e12) {
-    return `${(value / 1e12).toFixed(decimals)}T`;
+    return `${removeTrailingZeros((value / 1e12).toFixed(decimals))}T`;
   }
   if (Math.abs(value) >= 1e9) {
-    return `${(value / 1e9).toFixed(decimals)}B`;
+    return `${removeTrailingZeros((value / 1e9).toFixed(decimals))}B`;
   }
   if (Math.abs(value) >= 1e6) {
-    return `${(value / 1e6).toFixed(decimals)}M`;
+    return `${removeTrailingZeros((value / 1e6).toFixed(decimals))}M`;
   }
   if (Math.abs(value) >= 1e3) {
-    return `${(value / 1e3).toFixed(decimals)}K`;
+    return `${removeTrailingZeros((value / 1e3).toFixed(decimals))}K`;
   }
-  return value.toFixed(decimals);
+  return removeTrailingZeros(value.toFixed(decimals));
 }
 
 /**

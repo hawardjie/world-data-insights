@@ -22,7 +22,7 @@ import InteractiveDataExplorer from '@/components/sections/InteractiveDataExplor
 import SearchPanel from '@/components/sections/SearchPanel';
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState('overview');
+  const [activeSection, setActiveSection] = useState('data-explorer');
   const [searchQuery, setSearchQuery] = useState('');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -142,7 +142,7 @@ export default function Home() {
           </div>
           <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
             <p className="text-sm text-gray-500 dark:text-gray-500">
-              © 2025/2026 Econo World - Global Data Insights
+              © 2025 Econo World - Global Data Insights
             </p>
           </div>
         </div>

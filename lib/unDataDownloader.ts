@@ -15,6 +15,8 @@ export interface UNDataset {
   source?: 'UN' | 'WorldBank' | 'FRED';
   worldBankIndicator?: string;
   fredSeries?: string;
+  unit?: string;
+  yAxisLabel?: string;
 }
 
 /**
@@ -31,6 +33,8 @@ export const UN_DATASETS: UNDataset[] = [
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_1_Population.csv',
     pdfUrl: 'https://data.un.org/_Docs/SYB/PDF/SYB66_1_Population.pdf',
     lastUpdated: '2024-11-27',
+    unit: 'persons',
+    yAxisLabel: 'Total Population',
   },
   {
     id: 'population-density',
@@ -39,6 +43,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Population per square kilometer',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_2_Population_Density.csv',
     lastUpdated: '2024-11-27',
+    unit: 'persons per km²',
+    yAxisLabel: 'Density (persons/km²)',
   },
   {
     id: 'population-growth',
@@ -47,6 +53,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Annual population growth rates by country',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_3_Population_Growth.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent per year',
+    yAxisLabel: 'Growth Rate (%)',
   },
   {
     id: 'migrants-refugees',
@@ -55,6 +63,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Stock of international migrants and refugee populations',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_4_Migrants_Refugees.csv',
     lastUpdated: '2024-11-27',
+    unit: 'persons',
+    yAxisLabel: 'Number of Migrants/Refugees',
   },
 
   // NATIONAL ACCOUNTS
@@ -65,6 +75,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'GDP in current prices and constant prices',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_230_GDP.csv',
     lastUpdated: '2024-11-27',
+    unit: 'US dollars',
+    yAxisLabel: 'GDP (USD)',
   },
   {
     id: 'gdp-per-capita',
@@ -73,6 +85,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'GDP per capita in US dollars',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_231_GDP_Per_Capita.csv',
     lastUpdated: '2024-11-27',
+    unit: 'US dollars per person',
+    yAxisLabel: 'GDP per Capita (USD)',
   },
 
   // EDUCATION
@@ -83,6 +97,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Primary, secondary, and tertiary education enrollment rates',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_319_Enrollment.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent',
+    yAxisLabel: 'Enrollment Rate (%)',
   },
   {
     id: 'education-teachers',
@@ -91,6 +107,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Number of teachers at primary, secondary, and tertiary levels',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_320_Teachers.csv',
     lastUpdated: '2024-11-27',
+    unit: 'number of teachers',
+    yAxisLabel: 'Number of Teachers',
   },
   {
     id: 'education-expenditure',
@@ -99,6 +117,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Public expenditure on education as % of GDP and government expenditure',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_321_Education_Expenditure.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent of GDP',
+    yAxisLabel: 'Expenditure (% of GDP)',
   },
 
   // LABOUR MARKET
@@ -109,6 +129,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Labour force participation rates by sex',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_329_Labour_Force.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent',
+    yAxisLabel: 'Participation Rate (%)',
   },
   {
     id: 'unemployment',
@@ -117,6 +139,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Unemployment rates by sex and age groups',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_330_Unemployment.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent',
+    yAxisLabel: 'Unemployment Rate (%)',
   },
 
   // PRICE INDICES
@@ -127,6 +151,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Consumer price index, general and by category',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_224_CPI.csv',
     lastUpdated: '2024-11-27',
+    unit: 'index (2010=100)',
+    yAxisLabel: 'CPI Index (2010=100)',
   },
   {
     id: 'food-price-index',
@@ -135,6 +161,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Food component of consumer price index',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_225_Food_Prices.csv',
     lastUpdated: '2024-11-27',
+    unit: 'index (2010=100)',
+    yAxisLabel: 'Food Price Index (2010=100)',
   },
 
   // INTERNATIONAL TRADE
@@ -145,6 +173,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Exports, imports, and trade balance',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_264_Trade.csv',
     lastUpdated: '2024-11-27',
+    unit: 'millions of US dollars',
+    yAxisLabel: 'Trade Value (USD)',
   },
   {
     id: 'trade-major-partners',
@@ -153,6 +183,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Top import and export partners by country',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_265_Trade_Partners.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent of total trade',
+    yAxisLabel: 'Share of Trade (%)',
   },
 
   // ENERGY
@@ -163,6 +195,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Energy production, imports, exports, and consumption by source',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_280_Energy.csv',
     lastUpdated: '2024-11-27',
+    unit: 'terajoules or thousand metric tons',
+    yAxisLabel: 'Energy (TJ or thousand MT)',
   },
 
   // GENDER
@@ -173,6 +207,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Percentage of parliamentary seats occupied by women',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_317_Women_Parliament.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent',
+    yAxisLabel: 'Women in Parliament (%)',
   },
   {
     id: 'gender-parity-education',
@@ -181,6 +217,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Gender parity index in primary, secondary, and tertiary education',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_318_Gender_Education.csv',
     lastUpdated: '2024-11-27',
+    unit: 'index (1=parity)',
+    yAxisLabel: 'Gender Parity Index',
   },
 
   // HEALTH
@@ -191,6 +229,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Life expectancy in years by sex',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_325_Life_Expectancy.csv',
     lastUpdated: '2024-11-27',
+    unit: 'years',
+    yAxisLabel: 'Life Expectancy (years)',
   },
   {
     id: 'health-expenditure',
@@ -199,6 +239,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Health expenditure as % of GDP, public and private',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_326_Health_Expenditure.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent of GDP',
+    yAxisLabel: 'Health Expenditure (% of GDP)',
   },
 
   // SCIENCE & TECHNOLOGY
@@ -209,6 +251,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'R&D expenditure as % of GDP',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_327_RD_Expenditure.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent of GDP',
+    yAxisLabel: 'R&D Expenditure (% of GDP)',
   },
   {
     id: 'patent-applications',
@@ -217,6 +261,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Patent applications filed, residents and non-residents',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_328_Patents.csv',
     lastUpdated: '2024-11-27',
+    unit: 'number of applications',
+    yAxisLabel: 'Patent Applications',
   },
 
   // ENVIRONMENT
@@ -227,6 +273,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Carbon dioxide emissions from fossil fuels',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_290_CO2_Emissions.csv',
     lastUpdated: '2024-11-27',
+    unit: 'thousand metric tons',
+    yAxisLabel: 'CO₂ Emissions (thousand MT)',
   },
   {
     id: 'protected-areas',
@@ -235,6 +283,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Protected areas as % of total territory',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_291_Protected_Areas.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent of total area',
+    yAxisLabel: 'Protected Areas (%)',
   },
   {
     id: 'water-resources',
@@ -243,6 +293,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Freshwater withdrawals and availability',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_292_Water.csv',
     lastUpdated: '2024-11-27',
+    unit: 'billion cubic meters',
+    yAxisLabel: 'Water Volume (billion m³)',
   },
   {
     id: 'threatened-species',
@@ -251,6 +303,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Number of threatened species by taxonomic group',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_293_Species.csv',
     lastUpdated: '2024-11-27',
+    unit: 'number of species',
+    yAxisLabel: 'Number of Threatened Species',
   },
 
   // COMMUNICATION
@@ -261,6 +315,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Internet users per 100 inhabitants',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_310_Internet.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent of population',
+    yAxisLabel: 'Internet Users (% of population)',
   },
 
   // TOURISM
@@ -271,6 +327,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'International tourist arrivals and tourism receipts',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_313_Tourism.csv',
     lastUpdated: '2024-11-27',
+    unit: 'number of tourists or US dollars',
+    yAxisLabel: 'Tourist Arrivals or Receipts',
   },
 
   // CRIME
@@ -281,6 +339,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Intentional homicide rates per 100,000 population',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_314_Crime.csv',
     lastUpdated: '2024-11-27',
+    unit: 'per 100,000 population',
+    yAxisLabel: 'Homicide Rate (per 100k)',
   },
 
   // DEVELOPMENT ASSISTANCE
@@ -291,6 +351,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Net ODA received by country',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_322_ODA_Received.csv',
     lastUpdated: '2024-11-27',
+    unit: 'millions of US dollars',
+    yAxisLabel: 'ODA Received (USD)',
   },
   {
     id: 'oda-disbursed',
@@ -299,6 +361,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Net ODA disbursed by donor country',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_323_ODA_Disbursed.csv',
     lastUpdated: '2024-11-27',
+    unit: 'millions of US dollars',
+    yAxisLabel: 'ODA Disbursed (USD)',
   },
 
   // FINANCE
@@ -309,6 +373,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'National currency per US dollar, period average',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_226_Exchange_Rates.csv',
     lastUpdated: '2024-11-27',
+    unit: 'national currency per USD',
+    yAxisLabel: 'Exchange Rate (local currency/USD)',
   },
   {
     id: 'interest-rates',
@@ -317,6 +383,8 @@ export const UN_DATASETS: UNDataset[] = [
     description: 'Short-term and long-term interest rates',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_227_Interest_Rates.csv',
     lastUpdated: '2024-11-27',
+    unit: 'percent per annum',
+    yAxisLabel: 'Interest Rate (%)',
   },
 
   // WORLD BANK DATASETS (2024-2025 DATA AVAILABLE)
@@ -328,6 +396,8 @@ export const UN_DATASETS: UNDataset[] = [
     source: 'WorldBank',
     worldBankIndicator: 'SP.POP.TOTL',
     lastUpdated: '2025-01-15',
+    unit: 'persons',
+    yAxisLabel: 'Total Population',
   },
   {
     id: 'wb-gdp-current',
@@ -337,6 +407,8 @@ export const UN_DATASETS: UNDataset[] = [
     source: 'WorldBank',
     worldBankIndicator: 'NY.GDP.MKTP.CD',
     lastUpdated: '2025-01-15',
+    unit: 'current US dollars',
+    yAxisLabel: 'GDP (USD)',
   },
   {
     id: 'wb-gdp-per-capita',
@@ -346,6 +418,8 @@ export const UN_DATASETS: UNDataset[] = [
     source: 'WorldBank',
     worldBankIndicator: 'NY.GDP.PCAP.CD',
     lastUpdated: '2025-01-15',
+    unit: 'current US dollars per person',
+    yAxisLabel: 'GDP per Capita (USD)',
   },
   {
     id: 'wb-inflation',
@@ -355,6 +429,8 @@ export const UN_DATASETS: UNDataset[] = [
     source: 'WorldBank',
     worldBankIndicator: 'FP.CPI.TOTL.ZG',
     lastUpdated: '2025-01-15',
+    unit: 'percent',
+    yAxisLabel: 'Inflation Rate (%)',
   },
   {
     id: 'wb-unemployment',
@@ -364,6 +440,8 @@ export const UN_DATASETS: UNDataset[] = [
     source: 'WorldBank',
     worldBankIndicator: 'SL.UEM.TOTL.ZS',
     lastUpdated: '2025-01-15',
+    unit: 'percent of labor force',
+    yAxisLabel: 'Unemployment Rate (%)',
   },
   {
     id: 'wb-internet-users',
@@ -373,6 +451,8 @@ export const UN_DATASETS: UNDataset[] = [
     source: 'WorldBank',
     worldBankIndicator: 'IT.NET.USER.ZS',
     lastUpdated: '2025-01-15',
+    unit: 'percent of population',
+    yAxisLabel: 'Internet Users (%)',
   },
   {
     id: 'wb-energy-use',
@@ -382,6 +462,8 @@ export const UN_DATASETS: UNDataset[] = [
     source: 'WorldBank',
     worldBankIndicator: 'EG.USE.PCAP.KG.OE',
     lastUpdated: '2025-01-15',
+    unit: 'kg of oil equivalent per capita',
+    yAxisLabel: 'Energy Use (kg oil eq. per capita)',
   },
   {
     id: 'wb-life-expectancy',
@@ -391,6 +473,8 @@ export const UN_DATASETS: UNDataset[] = [
     source: 'WorldBank',
     worldBankIndicator: 'SP.DYN.LE00.IN',
     lastUpdated: '2025-01-15',
+    unit: 'years',
+    yAxisLabel: 'Life Expectancy (years)',
   },
   {
     id: 'wb-trade-gdp',
@@ -400,6 +484,8 @@ export const UN_DATASETS: UNDataset[] = [
     source: 'WorldBank',
     worldBankIndicator: 'NE.TRD.GNFS.ZS',
     lastUpdated: '2025-01-15',
+    unit: 'percent of GDP',
+    yAxisLabel: 'Trade (% of GDP)',
   },
 ];
 
@@ -453,4 +539,28 @@ export async function downloadAllDatasets(): Promise<void> {
   }
 
   console.log('All datasets downloaded successfully!');
+}
+
+/**
+ * Generate dynamic chart description with unit information
+ */
+export function getDatasetChartDescription(
+  dataset: UNDataset,
+  selectedCountries: string[],
+  startYear: number,
+  endYear: number,
+  chartType: 'line' | 'bar' | 'area' | 'multibar'
+): string {
+  const countryText = selectedCountries.length === 1
+    ? selectedCountries[0]
+    : `${selectedCountries.length} countries`;
+
+  const yearRange = chartType === 'bar'
+    ? `latest available year`
+    : `${startYear} to ${endYear}`;
+
+  let description = `${dataset.description}. `;
+  description += `Showing data for ${countryText} from ${yearRange}.`;
+
+  return description;
 }

@@ -10,7 +10,7 @@ import DataFilters, { FilterOption } from '@/components/ui/DataFilters';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { ChartSkeleton } from '@/components/ui/LoadingSpinner';
 import ErrorMessage from '@/components/ui/ErrorMessage';
-import { UN_DATASETS, getAllCategories } from '@/lib/unDataDownloader';
+import { UN_DATASETS, getAllCategories, getDatasetChartDescription } from '@/lib/unDataDownloader';
 import { Download, Filter, TrendingUp, BarChart3, AreaChart, BarChart2 } from 'lucide-react';
 
 interface ParsedDataPoint {
@@ -198,6 +198,18 @@ export default function InteractiveDataExplorer() {
 
   // Track actual year for bar chart
   const [actualBarChartYear, setActualBarChartYear] = useState<number | null>(null);
+
+  // Generate dynamic description based on selected dataset and filters
+  const dynamicDescription = useMemo(() => {
+    if (!currentDataset) return '';
+    return getDatasetChartDescription(
+      currentDataset,
+      selectedCountries,
+      startYear,
+      endYear,
+      chartType
+    );
+  }, [currentDataset, selectedCountries, startYear, endYear, chartType]);
 
   // Prepare chart data based on filters
   const chartData = useMemo(() => {
@@ -463,12 +475,38 @@ export default function InteractiveDataExplorer() {
                     No data available for the selected filters
                   </p>
                 </div>
-              ) : chartType === 'line' ? (
+              ) : (
+                <div className="relative">
+                  {/* Y-axis label on the left inside the chart */}
+                  {currentDataset?.yAxisLabel && (
+                    <div
+                      className="absolute top-1/2 z-10"
+                      style={{
+                        left: '8px',
+                        transform: 'translateY(-50%)'
+                      }}
+                    >
+                      <div
+                        className="text-xs font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap bg-white/90 dark:bg-gray-800/90 px-1.5 py-1 rounded shadow-sm"
+                        style={{
+                          writingMode: 'vertical-rl',
+                          transform: 'rotate(180deg)',
+                          textAlign: 'center'
+                        }}
+                      >
+                        {currentDataset.yAxisLabel}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Chart content */}
+                  <div>
+                    {chartType === 'line' ? (
                 <MultiSeriesLineChart
                   data={chartData}
                   title={currentDataset?.name || 'Data Visualization'}
                   series={countrySeries}
-                  description={`Showing ${selectedCountries.length} countries from ${startYear} to ${endYear}`}
+                  description={dynamicDescription}
                   source={
                     currentDataset?.source === 'WorldBank'
                       ? 'World Bank Open Data (data.worldbank.org)'
@@ -480,7 +518,7 @@ export default function InteractiveDataExplorer() {
                   data={chartData}
                   title={currentDataset?.name || 'Data Visualization'}
                   series={countrySeries}
-                  description={`Showing ${selectedCountries.length} countries from ${startYear} to ${endYear}`}
+                  description={dynamicDescription}
                   source={
                     currentDataset?.source === 'WorldBank'
                       ? 'World Bank Open Data (data.worldbank.org)'
@@ -492,7 +530,7 @@ export default function InteractiveDataExplorer() {
                   data={chartData}
                   title={currentDataset?.name || 'Data Visualization'}
                   series={countrySeries}
-                  description={`Showing ${selectedCountries.length} countries from ${startYear} to ${endYear}`}
+                  description={dynamicDescription}
                   source={
                     currentDataset?.source === 'WorldBank'
                       ? 'World Bank Open Data (data.worldbank.org)'
@@ -503,7 +541,7 @@ export default function InteractiveDataExplorer() {
                 <CategoryBarChart
                   data={chartData}
                   title={`${currentDataset?.name || 'Data'} (${actualBarChartYear || endYear})`}
-                  description={`${actualBarChartYear ? `Data for ${actualBarChartYear}` : 'Latest year data'} for ${selectedCountries.length} countries`}
+                  description={dynamicDescription}
                   colors={countrySeries.map((s) => s.color)}
                   source={
                     currentDataset?.source === 'WorldBank'
@@ -511,6 +549,9 @@ export default function InteractiveDataExplorer() {
                       : 'United Nations Statistical Yearbook (data.un.org)'
                   }
                 />
+              )}
+                  </div>
+                </div>
               )}
             </CardContent>
           </Card>
@@ -545,14 +586,6 @@ export default function InteractiveDataExplorer() {
             </Card>
           </div>
         </div>
-      </div>
-
-      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-        <p className="text-xs text-gray-600 dark:text-gray-400">
-          <strong>Data Sources:</strong> Live data fetched from United Nations Statistical Yearbook (data.un.org) and World Bank Open Data (data.worldbank.org).
-          World Bank datasets include 2024-2025 data. Use the filters above to explore different countries,
-          time periods, and metrics. Switch between line charts, area charts, multi-series bar charts (trends over time), and bar charts (latest year comparison).
-        </p>
       </div>
     </div>
   );
