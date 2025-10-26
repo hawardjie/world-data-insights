@@ -476,26 +476,13 @@ export default function InteractiveDataExplorer() {
                   </p>
                 </div>
               ) : (
-                <div className="relative">
-                  {/* Y-axis label on the left inside the chart */}
+                <div>
+                  {/* Y-axis label above the chart */}
                   {currentDataset?.yAxisLabel && (
-                    <div
-                      className="absolute top-1/2 z-10"
-                      style={{
-                        left: '8px',
-                        transform: 'translateY(-50%)'
-                      }}
-                    >
-                      <div
-                        className="text-xs font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap bg-white/90 dark:bg-gray-800/90 px-1.5 py-1 rounded shadow-sm"
-                        style={{
-                          writingMode: 'vertical-rl',
-                          transform: 'rotate(180deg)',
-                          textAlign: 'center'
-                        }}
-                      >
+                    <div className="mb-2">
+                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
                         {currentDataset.yAxisLabel}
-                      </div>
+                      </p>
                     </div>
                   )}
 

@@ -75,9 +75,12 @@ export default function DataFilters({
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 space-y-6">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-        Filter Data
-      </h3>
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+          Filter Data
+        </h3>
+        <div className="-mx-6 border-b border-gray-200 dark:border-gray-700 mb-3"></div>
+      </div>
 
       {/* Country Filter */}
       <div className="space-y-2">
@@ -98,7 +101,7 @@ export default function DataFilters({
             Clear All
           </button>
         </div>
-        <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto border border-gray-200 dark:border-gray-600 rounded-lg p-3">
+        <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto border border-gray-200 dark:border-gray-600 rounded-lg p-3">
           {countries.map((country) => (
             <label
               key={country.value}

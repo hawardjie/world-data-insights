@@ -89,7 +89,7 @@ export default function CategoryBarChart({
         <ResponsiveContainer width="100%" height={height}>
           <RechartsBarChart
             data={data}
-            margin={{ top: 5, right: 30, left: 20, bottom: 100 }}
+            margin={{ top: 5, right: 30, left: 0, bottom: 100 }}
           >
             <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
             <XAxis
@@ -103,7 +103,6 @@ export default function CategoryBarChart({
               tickFormatter={(value) => formatNumber(value)}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Legend />
             <Bar dataKey="value" name={valueLabel} fill={color}>
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={barColors[index % barColors.length]} />

@@ -60,11 +60,11 @@ export const UN_DATASETS: UNDataset[] = [
     id: 'migrants-refugees',
     name: 'International migrants and refugees',
     category: 'Population',
-    description: 'Stock of international migrants and refugee populations',
+    description: 'Stock of international migrants and refugee populations. Values represent the total number of people in thousands.',
     csvUrl: 'https://data.un.org/_Docs/SYB/CSV/SYB66_4_Migrants_Refugees.csv',
     lastUpdated: '2024-11-27',
-    unit: 'persons',
-    yAxisLabel: 'Number of Migrants/Refugees',
+    unit: 'persons (thousands)',
+    yAxisLabel: 'Stock (thousands of persons)',
   },
 
   // NATIONAL ACCOUNTS

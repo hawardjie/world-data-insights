@@ -65,7 +65,7 @@ export default function MultiSeriesLineChart({
       <ResponsiveContainer width="100%" height={height}>
         <LineChart
           data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: xAxisLabel ? 25 : 5 }}
+          margin={{ top: 5, right: 30, left: 0, bottom: xAxisLabel ? 25 : 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
           <XAxis

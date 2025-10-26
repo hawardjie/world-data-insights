@@ -67,7 +67,7 @@ export default function MultiSeriesAreaChart({
       <ResponsiveContainer width="100%" height={height}>
         <AreaChart
           data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: xAxisLabel ? 25 : 5 }}
+          margin={{ top: 5, right: 30, left: 0, bottom: xAxisLabel ? 25 : 5 }}
         >
           <defs>
             {series.map((s) => (
