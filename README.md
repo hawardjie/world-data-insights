@@ -259,4 +259,4 @@ Future enhancements planned:
 
 ---
 
-**Built with data from FRED - Making economic research accessible to everyone.**
+**Making economic research accessible to everyone.**
